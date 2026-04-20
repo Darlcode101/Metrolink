@@ -10,35 +10,70 @@ public class Main {
         String line = "";
 
         Scanner start = new Scanner(System.in);
-        System.out.println("enter start location ");
-        String startLocation = start.nextLine();
-        System.out.println("start location is" + startLocation);
+        boolean startfound = false;
+            while (startfound == false){
+                        try {   
+                        System.out.println("enter start location ");
+                        String startLocation = start.nextLine();
+                        reader = new BufferedReader(new FileReader(file));
+                        while((line = reader.readLine()) != null) {
+                            String[] row = line.split(",");
+                            if (row.length > 1 && row[1].equals(startLocation)){
+                                System.out.println("start location is " + startLocation);          
+                                startfound = true;
+                                break;
+                                }
+                            }
+                            if (startfound == false) {
+                                System.out.println("Try again, location not found");
+                            }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
 
-        Scanner end = new Scanner(System.in);
-        System.out.println("enter end location ");
-        String endLocation = end.nextLine();
-                try {   
-                reader = new BufferedReader(new FileReader(file));
-                while((line = reader.readLine()) != null) {
-                    String[] row = line.split(",");
-                    if (row.length > 1 && row[1].equals(endLocation)){
-                        System.out.println("end location is " + endLocation);
+                    }
+
+                    finally{
+                        try {
+                            reader.close(); 
+                        } catch (Exception e) {
+                        }
+
                     }
                 }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
 
-            }
+        Scanner end = new Scanner(System.in);
+        boolean endfound = false;
+            while (endfound == false){
+                        try {   
+                        System.out.println("enter end location ");
+                        String endLocation = end.nextLine();
+                        reader = new BufferedReader(new FileReader(file));
+                        while((line = reader.readLine()) != null) {
+                            String[] row = line.split(",");
+                            if (row.length > 1 && row[1].equals(endLocation)){
+                                System.out.println("end location is " + endLocation);          
+                                endfound = true;
+                                break;
+                                }
+                            }
+                            if (endfound == false) {
+                                System.out.println("Try again, location not found");
+                            }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
 
-            finally{
-                try {
-                    reader.close(); 
-                } catch (Exception e) {
-                }
+                    }
 
-            }
+                    finally{
+                        try {
+                            reader.close(); 
+                        } catch (Exception e) {
+                        }
 
-    
+                    }
+        }
     }
 }
+
