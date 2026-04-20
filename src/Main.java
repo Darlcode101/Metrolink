@@ -1,4 +1,4 @@
-import java.io.*;
+
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
@@ -6,74 +6,11 @@ public class Main {
         
         //file location to run the program from my mac
         String file = "/Users/alexdarlington/Desktop/summer project/Metrolink_times_linecolour(in).csv";
-        BufferedReader reader = null;
-        String line = "";
+        Scanner input = new Scanner(System.in);
 
-        Scanner start = new Scanner(System.in);
-        boolean startfound = false;
-            while (startfound == false){
-                        try {   
-                        System.out.println("enter start location ");
-                        String startLocation = start.nextLine();
-                        reader = new BufferedReader(new FileReader(file));
-                        while((line = reader.readLine()) != null) {
-                            String[] row = line.split(",");
-                            if (row.length > 1 && row[1].equals(startLocation)){
-                                System.out.println("start location is " + startLocation);          
-                                startfound = true;
-                                break;
-                                }
-                            }
-                            if (startfound == false) {
-                                System.out.println("Try again, location not found");
-                            }
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
+        String startLocation = CSVreader.InputVerification("enter departure", file, input);
+        String endLocation = CSVreader.InputVerification("enter destination", file, input);
 
-                    }
-
-                    finally{
-                        try {
-                            reader.close(); 
-                        } catch (Exception e) {
-                        }
-
-                    }
-                }
-
-        Scanner end = new Scanner(System.in);
-        boolean endfound = false;
-            while (endfound == false){
-                        try {   
-                        System.out.println("enter end location ");
-                        String endLocation = end.nextLine();
-                        reader = new BufferedReader(new FileReader(file));
-                        while((line = reader.readLine()) != null) {
-                            String[] row = line.split(",");
-                            if (row.length > 1 && row[1].equals(endLocation)){
-                                System.out.println("end location is " + endLocation);          
-                                endfound = true;
-                                break;
-                                }
-                            }
-                            if (endfound == false) {
-                                System.out.println("Try again, location not found");
-                            }
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-
-                    }
-
-                    finally{
-                        try {
-                            reader.close(); 
-                        } catch (Exception e) {
-                        }
-
-                    }
-        }
+        System.out.println("Trip starts at " + startLocation + " and ends at " + endLocation);
     }
 }
-
