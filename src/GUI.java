@@ -2,23 +2,26 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-public class GUI implements ActionListener{
+public class GUI {
+    
+    private JTextField departureInput;
+    private JTextField arrivalInput;
+    private String startLocation;
+    private String endLocation;
+
+    //file location to run the program from my mac
+    String file = "/Users/alexdarlington/Desktop/summer project/Metrolink_times_linecolour(in).csv";
+    
+    //file location to run the program from school computer
+    //String file = "/home/darling6/h-drive/Summer project/Metrolink/Metrolink_times_linecolour(in).csv";
+
     public GUI(){
-
-        //file location to run the program from my mac
-        //String file = "/Users/alexdarlington/Desktop/summer project/Metrolink_times_linecolour(in).csv";
-        
-        String file = "/home/darling6/h-drive/Summer project/Metrolink/Metrolink_times_linecolour(in).csv";
-        Scanner input = new Scanner(System.in);
-
 
         //TITLE
         JFrame frame = new JFrame("Manchester metro route planner");
@@ -37,9 +40,9 @@ public class GUI implements ActionListener{
         departureButton.setBounds(214, 30, 200, 60);
         frame.add(departureButton);
         
-        JTextField departureinput = new JTextField(20);
-        departureinput.setBounds(15,70, 150,20);
-        frame.add(departureinput);
+        departureInput = new JTextField(20);
+        departureInput.setBounds(15,70, 150,20);
+        frame.add(departureInput);
         
         
         //ARRIVAL
@@ -51,20 +54,34 @@ public class GUI implements ActionListener{
         arrivalButton.setBounds(214, 150, 200, 60);
         frame.add(arrivalButton);
 
-        JTextField arrivalinput = new JTextField(20);
-        arrivalinput.setBounds(15,170, 150,20);
-        frame.add(arrivalinput);
+        arrivalInput = new JTextField(20);
+        arrivalInput.setBounds(15,170, 150,20);
+        frame.add(arrivalInput);
 
 
         departureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                departure.setText("you have confirmed your choice");
+                String tempVal = departureInput.getText();
+                if(CSVreader.valueChecker(file, tempVal)){
+                    startLocation = tempVal;
+                    departure.setText("Departure set to " + startLocation);
+                } 
+                else{
+                    departure.setText("Invalid station, try again");
+                }
             }
         });
 
         arrivalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                arrival.setText("you have confirmed your choice");
+                String tempVal = arrivalInput.getText();
+                if(CSVreader.valueChecker(file, tempVal)){
+                    endLocation = tempVal;
+                    arrival.setText("Arrival set to " + endLocation);
+                } 
+                else{
+                    arrival.setText("Invalid station, try again");
+                }
             }
         });
 
