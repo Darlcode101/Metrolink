@@ -2,6 +2,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +17,8 @@ public class GUI {
     private String startLocation;
     private String endLocation;
 
+    private Hashmap hashmap = new Hashmap();
+
     //file location to run the program from my mac
     String file = "/Users/alexdarlington/Desktop/summer project/Metrolink_times_linecolour(in).csv";
     
@@ -22,6 +26,7 @@ public class GUI {
     //String file = "/home/darling6/h-drive/Summer project/Metrolink/Metrolink_times_linecolour(in).csv";
 
     public GUI(){
+        hashmap.MapLoader(file);
 
         //TITLE
         JFrame frame = new JFrame("Manchester metro route planner");
@@ -58,6 +63,11 @@ public class GUI {
         arrivalInput.setBounds(15,170, 150,20);
         frame.add(arrivalInput);
 
+        //ROUTE CALCULATOR
+        JButton FindRouteButton = new JButton("Calculate Route");
+        FindRouteButton.setBounds(15, 300, 400, 40);
+        frame.add(FindRouteButton);
+
 
         departureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
@@ -81,6 +91,19 @@ public class GUI {
                 } 
                 else{
                     arrival.setText("Invalid station, try again");
+                }
+            }
+        });
+
+        FindRouteButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if (startLocation != null && endLocation != null){
+                    List<String> neighbours = hashmap.getNeighbours(startLocation);
+
+                    System.out.println("from " + startLocation + " your next stops are " + neighbours);
+                }
+                else {
+                    System.out.println("u gotta select two stops");
                 }
             }
         });
