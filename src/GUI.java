@@ -3,7 +3,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +15,7 @@ public class GUI {
     private JTextField arrivalInput;
     private String startLocation;
     private String endLocation;
-
+    private String answer;
     private Hashmap hashmap = new Hashmap();
 
     //file location to run the program from my mac
@@ -30,7 +29,7 @@ public class GUI {
 
         //TITLE
         JFrame frame = new JFrame("Manchester metro route planner");
-        frame.setSize(428,428);
+        frame.setSize(1024,428);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.setResizable(false);
@@ -68,6 +67,10 @@ public class GUI {
         FindRouteButton.setBounds(15, 300, 400, 40);
         frame.add(FindRouteButton);
 
+        JLabel FindRouteAnswer = new JLabel("");
+        FindRouteAnswer.setBounds(15,340,400,40);
+        frame.add(FindRouteAnswer);
+
 
         departureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
@@ -100,13 +103,16 @@ public class GUI {
                 if (startLocation != null && endLocation != null){
                     List<String> neighbours = hashmap.getNeighbours(startLocation);
 
-                    System.out.println("from " + startLocation + " your next stops are " + neighbours);
+                    String result = ("from " + startLocation + " your next stops are " + neighbours);
+
+                    FindRouteAnswer.setText(result);
                 }
                 else {
-                    System.out.println("u gotta select two stops");
+                    FindRouteAnswer.setText("u gotta select two stops");
                 }
             }
         });
+
 
         frame.setVisible(true);
          
