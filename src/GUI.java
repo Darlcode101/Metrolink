@@ -15,7 +15,6 @@ public class GUI {
     private JTextField arrivalInput;
     private String startLocation;
     private String endLocation;
-    private String answer;
     private Hashmap hashmap = new Hashmap();
 
     //file location to run the program from my mac
@@ -101,9 +100,11 @@ public class GUI {
         FindRouteButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (startLocation != null && endLocation != null){
-                    List<String> neighbours = hashmap.getNeighbours(startLocation);
-
-                    String result = ("from " + startLocation + " your next stops are " + neighbours);
+                   
+                    Dijkstra dijkstra = new Dijkstra();
+                    List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
+                    
+                    String result = ("route: " + route );
 
                     FindRouteAnswer.setText(result);
                 }

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Hashmap{
 
-    private Map<String, List <String>> alist = new HashMap<>();
+    private Map<String, List <Edge>> alist = new HashMap<>();
 
     public void MapLoader(String file){
     BufferedReader reader = null;
@@ -15,17 +15,20 @@ public class Hashmap{
             reader = new BufferedReader(new FileReader(file));
             while((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-                if (row.length > 1){
+
+                
+                if (row.length > 1 && !row[0].equals("From")){
                     String stationA = row[0];
                     String stationB = row[1];
+                    int travelTime = Integer.parseInt(row[2]);
 
                     //connection between stations
                     alist.putIfAbsent(stationA, new ArrayList<>());
-                    alist.get(stationA).add(stationB);
+                    alist.get(stationA).add(new Edge(stationB, travelTime));
                     
                     //connection between stations the other way around
                     alist.putIfAbsent(stationB, new ArrayList<>());
-                    alist.get(stationB).add(stationA);
+                    alist.get(stationB).add(new Edge(stationA, travelTime));
                 }
             }
         }
@@ -35,7 +38,10 @@ public class Hashmap{
         }
 
         }
-        public List<String> getNeighbours(String stationName) {
+        public List<Edge> getNeighbours(String stationName) {
         return alist.getOrDefault(stationName, new ArrayList<>());
     }
+        public Set<String> getAllStations() {
+        return alist.keySet(); 
+}
 }
