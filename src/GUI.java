@@ -112,10 +112,17 @@ public class GUI {
                     List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
                     
-                    String result = ("route: " + route );
+
+                    StringBuilder result = new StringBuilder ("the route is\n\n");
+
+                    for (String station : route) {
+                        result.append(station).append("\n");
+                    }
                     
-                    result += "\nTotal time is " + time + " mins";
-                    RoutePlan.setText(result);
+                    result.append( "\nTotal time is " + time + " mins");
+                    RoutePlan.setText(result.toString());
+
+
                 }
                 else {
                     FindRouteAnswer.setText("u gotta select two stops");

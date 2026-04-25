@@ -38,7 +38,7 @@ public class Dijkstra {
                     String neighbour = edge.neighbour;
                     double travelTime = edge.time;
 
-                    double totTime = distances.get(current) + travelTime ; 
+                    totTime = distances.get(current) + travelTime ; 
 
                     if (totTime < distances.get(edge.neighbour)){
                         distances.put(edge.neighbour, totTime);
