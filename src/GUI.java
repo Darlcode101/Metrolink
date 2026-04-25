@@ -110,9 +110,11 @@ public class GUI {
                    
                     Dijkstra dijkstra = new Dijkstra();
                     List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
+                    double time = dijkstra.getTotTime();  
                     
                     String result = ("route: " + route );
-
+                    
+                    result += "\nTotal time is " + time + " mins";
                     RoutePlan.setText(result);
                 }
                 else {

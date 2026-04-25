@@ -6,9 +6,11 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 public class Dijkstra {
-   
+
+    private double totTime;
 
         public List<String> findRoute(Hashmap hashmap, String start, String end){
+            
         
             Map<String, Double> distances = new HashMap<>();
             Map<String, String> previous = new HashMap<>();
@@ -52,9 +54,14 @@ public class Dijkstra {
         while (current != null) {
             route.add(0, current);
             current = previous.get(current);
-        }
+        }   
+        totTime = distances.get(end);
         return route;
     }
+    public double getTotTime() {
+    return totTime;
+}
+
 }
 
 
