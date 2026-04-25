@@ -70,6 +70,10 @@ public class GUI {
         FindRouteAnswer.setBounds(15,340,400,40);
         frame.add(FindRouteAnswer);
 
+        JLabel RoutePlan = new JLabel("");
+        RoutePlan.setBounds(524, 15, 500, 400);
+        frame.add(RoutePlan);
+
 
         departureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
@@ -106,7 +110,7 @@ public class GUI {
                     
                     String result = ("route: " + route );
 
-                    FindRouteAnswer.setText(result);
+                    RoutePlan.setText(result);
                 }
                 else {
                     FindRouteAnswer.setText("u gotta select two stops");

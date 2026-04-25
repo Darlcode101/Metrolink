@@ -10,18 +10,18 @@ public class Dijkstra {
 
         public List<String> findRoute(Hashmap hashmap, String start, String end){
         
-            Map<String, Integer> distances = new HashMap<>();
+            Map<String, Double> distances = new HashMap<>();
             Map<String, String> previous = new HashMap<>();
 
             Set<String> details = hashmap.getAllStations();
                 for (String station : details) {
-                    distances.put(station, Integer.MAX_VALUE);
+                    distances.put(station, Double.MAX_VALUE);
                     if(station.equals(start)){
-                        distances.put(station, 0);
+                        distances.put(station, 0.0);
                 }
             }
 
-            PriorityQueue<String> pq = new PriorityQueue<>((a, b) -> distances.get(a) - distances.get(b));
+            PriorityQueue<String> pq = new PriorityQueue<>((a, b) -> Double.compare(distances.get(a), distances.get(b)));
 
             pq.add(start);
 
@@ -34,9 +34,9 @@ public class Dijkstra {
 
                 for (Edge edge : hashmap.getNeighbours(current)){
                     String neighbour = edge.neighbour;
-                    int travelTime = edge.time;
+                    double travelTime = edge.time;
 
-                    int totTime = distances.get(current) + travelTime ; 
+                    double totTime = distances.get(current) + travelTime ; 
 
                     if (totTime < distances.get(edge.neighbour)){
                         distances.put(edge.neighbour, totTime);
@@ -50,7 +50,7 @@ public class Dijkstra {
         String current = end;
 
         while (current != null) {
-            route.add(current);
+            route.add(0, current);
             current = previous.get(current);
         }
         return route;
@@ -62,9 +62,9 @@ public class Dijkstra {
 
 class Edge {
     String neighbour ;
-    int time;
+    double time;
     
-    public Edge(String neighbour, int time) {
+    public Edge(String neighbour, double time) {
         this.neighbour = neighbour;
         this.time = time;
     }

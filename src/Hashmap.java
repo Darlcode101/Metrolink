@@ -17,10 +17,10 @@ public class Hashmap{
                 String[] row = line.split(",");
 
                 
-                if (row.length > 1 && !row[0].equals("From")){
-                    String stationA = row[0];
-                    String stationB = row[1];
-                    int travelTime = Integer.parseInt(row[2]);
+                if (row.length > 1 && !row[2].equals("Time (mins)")){
+                    String stationA = row[0].trim();
+                    String stationB = row[1].trim();
+                    double travelTime = Double.parseDouble(row[2].trim());
 
                     //connection between stations
                     alist.putIfAbsent(stationA, new ArrayList<>());
