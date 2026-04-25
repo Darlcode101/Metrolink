@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
@@ -70,7 +71,9 @@ public class GUI {
         FindRouteAnswer.setBounds(15,340,400,40);
         frame.add(FindRouteAnswer);
 
-        JLabel RoutePlan = new JLabel("");
+        JTextArea RoutePlan = new JTextArea("");
+        RoutePlan.setLineWrap(true);
+        RoutePlan.setEditable(false);
         RoutePlan.setBounds(524, 15, 500, 400);
         frame.add(RoutePlan);
 
