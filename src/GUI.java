@@ -112,6 +112,7 @@ public class GUI {
                     List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
                     
+                    
 
                     StringBuilder result = new StringBuilder ("the route is\n\n");
 

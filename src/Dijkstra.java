@@ -41,6 +41,7 @@ public class Dijkstra {
                     totTime = distances.get(current) + travelTime ; 
 
                     if (totTime < distances.get(edge.neighbour)){
+                        
                         distances.put(edge.neighbour, totTime);
                         previous.put(neighbour, current);
                         pq.add(neighbour);
@@ -70,10 +71,12 @@ public class Dijkstra {
 class Edge {
     String neighbour ;
     double time;
+    String colour;
     
-    public Edge(String neighbour, double time) {
+    public Edge(String neighbour, double time, String colour) {
         this.neighbour = neighbour;
         this.time = time;
+        this.colour = colour;
     }
 
 }

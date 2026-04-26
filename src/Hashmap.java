@@ -11,25 +11,39 @@ public class Hashmap{
     public void MapLoader(String file){
     BufferedReader reader = null;
     String line ;
+    String colour = "";
+    
         try {   
             reader = new BufferedReader(new FileReader(file));
             while((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-
                 
-                if (row.length > 1 && !row[2].equals("Time (mins)")){
+                if (row.length == 1){
+                            colour = row[0].trim();
+                            System.out.println(colour);
+                    }
+                    
+                
+                else if (!row[2].equals("Time (mins)")){
+                    
+                    
+                   
                     String stationA = row[0].trim();
                     String stationB = row[1].trim();
                     double travelTime = Double.parseDouble(row[2].trim());
-
+                    
+                        
                     //connection between stations
                     alist.putIfAbsent(stationA, new ArrayList<>());
-                    alist.get(stationA).add(new Edge(stationB, travelTime));
+                    alist.get(stationA).add(new Edge(stationB, travelTime, colour));
                     
                     //connection between stations the other way around
                     alist.putIfAbsent(stationB, new ArrayList<>());
-                    alist.get(stationB).add(new Edge(stationA, travelTime));
+                    alist.get(stationB).add(new Edge(stationA, travelTime, colour));
+                    
+
                 }
+                
             }
         }
         catch (Exception e) {
@@ -43,5 +57,6 @@ public class Hashmap{
     }
         public Set<String> getAllStations() {
         return alist.keySet(); 
-}
+    }
+        
 }
