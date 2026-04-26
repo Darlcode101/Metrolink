@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -72,10 +73,11 @@ public class GUI {
         frame.add(FindRouteAnswer);
 
         JTextArea RoutePlan = new JTextArea("");
+        JScrollPane s = new JScrollPane(RoutePlan);  
         RoutePlan.setLineWrap(true);
         RoutePlan.setEditable(false);
-        RoutePlan.setBounds(524, 15, 500, 400);
-        frame.add(RoutePlan);
+        s.setBounds(524, 15, 500, 400);
+        frame.add(s);
 
 
         departureButton.addActionListener(new ActionListener() {
@@ -107,7 +109,7 @@ public class GUI {
         FindRouteButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (startLocation != null && endLocation != null){
-                   
+                
                     Dijkstra dijkstra = new Dijkstra();
                     List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
@@ -116,6 +118,7 @@ public class GUI {
                     StringBuilder result = new StringBuilder ("the route is\n\n");
 
                     for (String station : route) {
+                        
                         result.append(station).append("\n");
                     }
                     

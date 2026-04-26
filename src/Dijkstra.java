@@ -61,7 +61,7 @@ public class Dijkstra {
             String prevStation = previous.get(current);
             route.add(0, current);
             if (previousColour.get(prevStation)!= null&&(!previousColour.get(current).equalsIgnoreCase(previousColour.get(prevStation)))){
-                route.add(0,previousColour.get(prevStation));
+                route.add(0,"Change to the " +previousColour.get(prevStation)+" line\n");
                 System.out.println(current);
             }
             current = previous.get(current);
