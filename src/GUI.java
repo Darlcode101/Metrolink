@@ -119,7 +119,7 @@ public class GUI {
 
                     for (String station : route) {
                         
-                        result.append(station).append("\n");
+                        result.append(station + "\n");
                     }
                     
                     result.append( "\nTotal time is " + time + " mins");

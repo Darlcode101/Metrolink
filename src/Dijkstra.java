@@ -38,12 +38,20 @@ public class Dijkstra {
                 }
 
                 for (Edge edge : hashmap.getNeighbours(current)){
+
+
                     String neighbour = edge.neighbour;
                     double travelTime = edge.time;
-                    String colour = edge.colour;
+                    String compareColour = edge.colour;
+                    
+ 
+                    
+                    if(previousColour.get(current)!= null && !previousColour.get(current).equalsIgnoreCase(compareColour)){
+                        travelTime += 2;
+
+                    }
 
                     totTime = distances.get(current) + travelTime ; 
-
                     if (totTime < distances.get(edge.neighbour)){
                         
                         distances.put(edge.neighbour, totTime);
@@ -61,7 +69,7 @@ public class Dijkstra {
             String prevStation = previous.get(current);
             route.add(0, current);
             if (previousColour.get(prevStation)!= null&&(!previousColour.get(current).equalsIgnoreCase(previousColour.get(prevStation)))){
-                route.add(0,"Change to the " +previousColour.get(prevStation)+" line\n");
+                route.add(0,"*** Change to the " +previousColour.get(prevStation)+" line ***");
                 System.out.println(current);
             }
             current = previous.get(current);
