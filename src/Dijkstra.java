@@ -8,12 +8,15 @@ import java.util.Set;
 public class Dijkstra {
 
     private double totTime;
+    
 
         public List<String> findRoute(Hashmap hashmap, String start, String end){
             
         
             Map<String, Double> distances = new HashMap<>();
             Map<String, String> previous = new HashMap<>();
+            Map<String, String> previousColour = new HashMap<>();
+
 
             Set<String> details = hashmap.getAllStations();
                 for (String station : details) {
@@ -37,6 +40,7 @@ public class Dijkstra {
                 for (Edge edge : hashmap.getNeighbours(current)){
                     String neighbour = edge.neighbour;
                     double travelTime = edge.time;
+                    String colour = edge.colour;
 
                     totTime = distances.get(current) + travelTime ; 
 
@@ -44,6 +48,7 @@ public class Dijkstra {
                         
                         distances.put(edge.neighbour, totTime);
                         previous.put(neighbour, current);
+                        previousColour.put(neighbour, edge.colour);
                         pq.add(neighbour);
                     }
             }
@@ -53,7 +58,12 @@ public class Dijkstra {
         String current = end;
 
         while (current != null) {
+            String prevStation = previous.get(current);
             route.add(0, current);
+            if (previousColour.get(prevStation)!= null&&(!previousColour.get(current).equalsIgnoreCase(previousColour.get(prevStation)))){
+                route.add(0,previousColour.get(prevStation));
+                System.out.println(current);
+            }
             current = previous.get(current);
         }   
         totTime = distances.get(end);

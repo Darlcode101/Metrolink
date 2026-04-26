@@ -113,7 +113,6 @@ public class GUI {
                     double time = dijkstra.getTotTime();  
                     
                     
-
                     StringBuilder result = new StringBuilder ("the route is\n\n");
 
                     for (String station : route) {
