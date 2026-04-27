@@ -64,9 +64,13 @@ public class GUI {
         frame.add(arrivalInput);
 
         //ROUTE CALCULATOR
-        JButton FindRouteButton = new JButton("Calculate Route");
-        FindRouteButton.setBounds(15, 300, 400, 40);
-        frame.add(FindRouteButton);
+        JButton FindQuickestRouteButton = new JButton("Fastest");
+        FindQuickestRouteButton.setBounds(15, 300, 200, 40);
+        frame.add(FindQuickestRouteButton);
+
+        JButton FindFewestRouteButton = new JButton("Fewest changes");
+        FindFewestRouteButton.setBounds(215, 300, 200, 40);
+        frame.add(FindFewestRouteButton);
 
         JLabel FindRouteAnswer = new JLabel("");
         FindRouteAnswer.setBounds(15,340,400,40);
@@ -105,14 +109,14 @@ public class GUI {
                 }
             }
         });
-
-        FindRouteButton.addActionListener(new ActionListener(){
+        FindFewestRouteButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (startLocation != null && endLocation != null){
                 
                     Dijkstra dijkstra = new Dijkstra();
                     List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
+                    int changes = dijkstra.getChangeCount();  
                     
                     
                     StringBuilder result = new StringBuilder ("the route is\n\n");
@@ -122,7 +126,37 @@ public class GUI {
                         result.append(station + "\n");
                     }
                     
-                    result.append( "\nTotal time is " + time + " mins");
+                    result.append( "\nTotal time is " + time + " mins\n");
+                    result.append("Number of changes = " + changes);
+                    RoutePlan.setText(result.toString());
+
+
+                }
+                else {
+                    FindRouteAnswer.setText("u gotta select two stops");
+                }
+            }
+        });
+
+        FindQuickestRouteButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if (startLocation != null && endLocation != null){
+                
+                    Dijkstra dijkstra = new Dijkstra();
+                    List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
+                    double time = dijkstra.getTotTime();  
+                    int changes = dijkstra.getChangeCount();  
+                    
+                    
+                    StringBuilder result = new StringBuilder ("the route is\n\n");
+
+                    for (String station : route) {
+                        
+                        result.append(station + "\n");
+                    }
+                    
+                    result.append( "\nTotal time is " + time + " mins\n");
+                    result.append("Number of changes = " + changes);
                     RoutePlan.setText(result.toString());
 
 
