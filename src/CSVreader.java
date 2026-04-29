@@ -14,7 +14,7 @@ public class CSVreader {
             reader = new BufferedReader(new FileReader(file));
             while((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-                if (row.length > 1 && row[1].equals(location)){
+                if (row.length > 1 && row[1].equals(location)|| row[0].equals(location)){
                     return true;
                 }
             }

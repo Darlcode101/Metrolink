@@ -13,6 +13,8 @@
 
             public List<String> findRoute(Hashmap hashmap, String start, String end, boolean useCost){
                 
+                this.changeCount = 0;
+                this.totTime = 0;
                 
                 Map<String, Double> distances = new HashMap<>();
                 Map<String, String> previous = new HashMap<>();
@@ -66,10 +68,6 @@
                             previous.put(neighbour, current);
                             previousColour.put(neighbour, edge.colour);
 
-                            if (current.equals(start)){
-                                previousColour.put(start, edge.colour);
-                            }
-
                             pq.add(neighbour);
 
 
@@ -82,13 +80,18 @@
             List<String> route = new ArrayList<>();
 
             String current = end;
+            String sourcecolour = "";
+            
 
             while (current != null) {
                 String prevStation = previous.get(current);
                 String colour = previousColour.get(current);
 
+                if (colour != null) {
+                sourcecolour = colour;
+                }
                 
-                    route.add(0, current + " on " + colour + " line");
+                    route.add(0, current + " on " + sourcecolour + " line");
                 
                 if (previousColour.get(prevStation)!= null&&(!previousColour.get(current).equalsIgnoreCase(previousColour.get(prevStation)))){
                     route.add(0,"*** Change to the " +previousColour.get(current)+" line ***");
