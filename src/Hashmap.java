@@ -56,7 +56,6 @@ public class Hashmap{
         return alist.getOrDefault(stationName, new ArrayList<>());
     }
         public Set<String> getAllStations() {
-        System.out.println(alist.keySet());
         return alist.keySet(); 
        
     }

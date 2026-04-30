@@ -9,13 +9,21 @@
 
         private double totTime;
         private int changeCount = 0;
+
+        public double getTotTime() {
+        return totTime;
+    }
+
+    public int getChangeCount() {
+        return changeCount;
+    }    
         
 
-            public List<String> findRoute(Hashmap hashmap, String start, String end, boolean useCost){
+        public List<String> findRoute(Hashmap hashmap, String start, String end){
                 
                 this.changeCount = 0;
                 this.totTime = 0;
-                
+
                 Map<String, Double> distances = new HashMap<>();
                 Map<String, String> previous = new HashMap<>();
                 Map<String, String> previousColour = new HashMap<>();
@@ -47,20 +55,12 @@
                         String neighbour = edge.neighbour;
                         double travelTime = edge.time;
                         String compareColour = edge.colour;
-                        int penalty = 0;
-
-                        if(previousColour.get(current)!= null && !previousColour.get(current).equalsIgnoreCase(compareColour))
-                        {
-                            if (useCost){
-                                penalty = 100;
-                            }
-                            else{
+            
+                        if(previousColour.get(current)!= null && !previousColour.get(current).equalsIgnoreCase(compareColour)){
                                 travelTime += 2;
-                            }
                         }
                         
-                        
-                        totTime = distances.get(current) + travelTime + penalty ; 
+                        totTime = distances.get(current) + travelTime ; 
 
                         if (totTime < distances.get(edge.neighbour)){
                             
@@ -101,23 +101,82 @@
             }   
             totTime = distances.get(end);
             
-            if (useCost){
-                totTime = totTime - (changeCount  * 100) + (changeCount * 2);
-            }
             return route;
         }
-        public double getTotTime() {
-        return totTime;
+   
+        public List<String> findFewestRoute(Hashmap hashmap, String start, String end){
+            this.changeCount = 0;
+            this.totTime = 0;
+
+            Map<lineInfo, Double> distances = new HashMap<>();
+            Map<lineInfo, lineInfo> previous = new HashMap<>();
+            Map<lineInfo, String> previousColour = new HashMap<>();
+            
+
+            PriorityQueue<lineInfo> pq = new PriorityQueue<>((a, b) -> Double.compare(distances.get(a), distances.get(b)));
+
+            for (Edge edge : hashmap.getNeighbours(start)){
+                lineInfo startState = new lineInfo(start, edge.colour);
+                distances.put(startState, 0.0);
+                pq.add(startState);
+                }
+            
+            lineInfo endState = null;
+
+            while (!pq.isEmpty()){
+                lineInfo current = pq.poll();
+                
+                if (current.station().equals(end)) {
+                endState = current;
+                break;
+                }
+                for (Edge edge : hashmap.getNeighbours(current.station())) {
+                    double weight;
+                    if( edge.colour.equalsIgnoreCase(current.colour())){
+                            weight = 1.0;
+                        } else {
+                            weight = 1000.0;
+                        }
+                    
+                    double newDist = distances.get(current) + weight;
+                    
+                    lineInfo nextState = new lineInfo(edge.neighbour, edge.colour);
+                    
+                    
+                    if (newDist < distances.getOrDefault(nextState, Double.MAX_VALUE)) {
+                        distances.put(nextState, newDist);
+                        previous.put(nextState, current);
+                        pq.add(nextState);
+                    }
+
+                }
+                }
+            List<String> route = new ArrayList<>();
+            
+            lineInfo current = endState;
+
+            while (current != null) {
+                lineInfo prevStation = previous.get(current);
+                String colour = previousColour.get(current);
+
+                
+                
+                    route.add(0, current.station() + " on " + current.colour() + " line");
+                
+                if (previousColour.get(prevStation)!= null&&(!previousColour.get(current).equalsIgnoreCase(previousColour.get(prevStation)))){
+                    route.add(0,"*** Change to the " +previousColour.get(current)+" line ***");
+                    changeCount ++;
+                }
+                current = previous.get(current);
+            }   
+            totTime = distances.get(endState);
+            
+            return route;
+        }
     }
-        public int getChangeCount() {
-        return changeCount;
-    }
-
-    }
-
-
-
-
+        
+        
+    record lineInfo(String station, String colour) {}
     class Edge {
         String neighbour ;
         double time;
@@ -128,5 +187,6 @@
             this.time = time;
             this.colour = colour;
         }
+       
 
     }

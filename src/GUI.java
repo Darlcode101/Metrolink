@@ -114,7 +114,7 @@ public class GUI {
                 if (startLocation != null && endLocation != null){
                 
                     Dijkstra dijkstra = new Dijkstra();
-                    List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation, true);
+                    List <String> route = dijkstra.findFewestRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
                     int changes = dijkstra.getChangeCount();  
                     
@@ -143,7 +143,7 @@ public class GUI {
                 if (startLocation != null && endLocation != null){
                 
                     Dijkstra dijkstra = new Dijkstra();
-                    List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation, false);
+                    List <String> route = dijkstra.findRoute(hashmap, startLocation, endLocation);
                     double time = dijkstra.getTotTime();  
                     int changes = dijkstra.getChangeCount();  
                     
