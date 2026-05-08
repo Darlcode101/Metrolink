@@ -46,7 +46,7 @@
                 for (Edge edge : hashmap.getNeighbours(current.station())) {
                 double punishment = 0 ;
                    
-                    if( !edge.colour.equalsIgnoreCase(current.colour())){
+                    if( !edge.colour.equals(current.colour())){
                             if (fewestChanges){
                                 punishment += 100;
                             }
@@ -79,7 +79,7 @@
                 
                 route.add(0, current.station() + " on " + current.colour() + " line");
 
-                if (prevStation != null &&  current.station() != null && !current.colour().equalsIgnoreCase(prevStation.colour())){
+                if (prevStation != null &&  current.station() != null && !current.colour().equals(prevStation.colour())){
                     route.add(0,"*** Change to the " + current.colour()+" line ***");
                     changeCount ++;
                 }
