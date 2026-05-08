@@ -23,6 +23,8 @@
             Map<lineInfo, Double> distances = new HashMap<>();
             Map<lineInfo, lineInfo> previous = new HashMap<>();
             
+            //stores the actual time rather than the weight
+            Map<lineInfo, Double> realTime = new HashMap<>();
             
 
             PriorityQueue<lineInfo> pq = new PriorityQueue<>((a, b) -> Double.compare(distances.get(a), distances.get(b)));
@@ -30,66 +32,72 @@
             for (Edge edge : hashmap.getNeighbours(start)){
                 lineInfo startState = new lineInfo(start, edge.colour);
                 distances.put(startState, 0.0);
+                realTime.put(startState, 0.0);
                 pq.add(startState);
                 }
             
             lineInfo endState = null;
 
             while (!pq.isEmpty()){
-                lineInfo current = pq.poll();
+                lineInfo currentStation = pq.poll();
                 
-                if (current.station().equals(end)) {
-                endState = current;
+                if (currentStation.station().equals(end)) {
+                endState = currentStation;
                 break;
                 }
 
-                for (Edge edge : hashmap.getNeighbours(current.station())) {
-                double punishment = 0 ;
+                for (Edge edge : hashmap.getNeighbours(currentStation.station())) {
+                double punishment = 0.0 ;
+                double changeTime = 0.0;
                    
-                    if( !edge.colour.equals(current.colour())){
+                    if( !edge.colour.equals(currentStation.colour())){
                             if (fewestChanges){
-                                punishment += 100;
+                                punishment += 100.0;
+                                changeTime += 2.0;
                             }
                             else{
                                 punishment += 2.0;
+                                changeTime += 2.0;
                             }
                         }
                     
-                    double newTime = distances.get(current) + edge.time + punishment;
-
+                    double timeWithPunishment = distances.get(currentStation) + edge.time + punishment;
                     
-                    lineInfo nextState = new lineInfo(edge.neighbour, edge.colour);
+                    double RealTime = realTime.get(currentStation) + edge.time + changeTime;
+                    
+                    lineInfo nextStation = new lineInfo(edge.neighbour, edge.colour);
                     
                     
-                    if (newTime < distances.getOrDefault(nextState, Double.MAX_VALUE)) {
-                        distances.put(nextState, newTime);
-                        previous.put(nextState, current);
-                        pq.add(nextState);
+                    if (timeWithPunishment < distances.getOrDefault(nextStation, Double.MAX_VALUE)) {
+                        distances.put(nextStation, timeWithPunishment);
+                        realTime.put(nextStation, RealTime);
+                        previous.put(nextStation, currentStation);
+                        pq.add(nextStation);
                     }
 
                 }
                 }
             List<String> route = new ArrayList<>();
             
-            lineInfo current = endState;
+            lineInfo currentStation = endState;
 
-            while (current != null) {
+            while (currentStation != null) {
                 
-                lineInfo prevStation = previous.get(current);
+                lineInfo prevStation = previous.get(currentStation);
                 
-                route.add(0, current.station() + " on " + current.colour() + " line");
+                route.add(0, currentStation.station() + " on " + currentStation.colour() + " line");
 
-                if (prevStation != null &&  current.station() != null && !current.colour().equals(prevStation.colour())){
-                    route.add(0,"*** Change to the " + current.colour()+" line ***");
+                if (prevStation != null &&  currentStation.station() != null && !currentStation.colour().equals(prevStation.colour())){
+                    route.add(0,"*** Change to the " + currentStation.colour()+" line ***");
                     changeCount ++;
                 }
                 
                 
                 
                
-                current = previous.get(current);
+                currentStation = previous.get(currentStation);
             }   
-            totTime = distances.get(endState);
+            totTime = realTime.get(endState);
             
             return route;
         }
