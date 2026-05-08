@@ -80,7 +80,7 @@ public class GUI {
         JScrollPane s = new JScrollPane(RoutePlan);  
         RoutePlan.setLineWrap(true);
         RoutePlan.setEditable(false);
-        s.setBounds(524, 15, 500, 400);
+        s.setBounds(524, 0, 500, 380);
         frame.add(s);
 
 
