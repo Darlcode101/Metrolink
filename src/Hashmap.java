@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
 
-//adjacency matrix from CSV, havent implemented colours yet or handeled error case from first row being from to and time
+//adjacency list from CSV, havent implemented colours yet or handeled error case from first row being from to and time
 
 public class Hashmap{
 

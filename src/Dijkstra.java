@@ -1,8 +1,4 @@
-    import java.util.ArrayList;
-    import java.util.HashMap;
-    import java.util.List;
-    import java.util.Map;
-    import java.util.PriorityQueue;
+    import java.util.*;
 
     public class Dijkstra {
 
@@ -23,8 +19,8 @@
             this.changeCount = 0;
             this.totTime = 0;
 
+            
             Map<lineInfo, Double> distances = new HashMap<>();
-            Map<lineInfo, Double> time = new HashMap<>();
             Map<lineInfo, lineInfo> previous = new HashMap<>();
             
             
@@ -34,7 +30,6 @@
             for (Edge edge : hashmap.getNeighbours(start)){
                 lineInfo startState = new lineInfo(start, edge.colour);
                 distances.put(startState, 0.0);
-                time.put(startState, 0.0);
                 pq.add(startState);
                 }
             
@@ -60,7 +55,7 @@
                             }
                         }
                     
-                    double newTime = time.get(current) + edge.time + punishment;
+                    double newTime = distances.get(current) + edge.time + punishment;
 
                     
                     lineInfo nextState = new lineInfo(edge.neighbour, edge.colour);
@@ -68,7 +63,6 @@
                     
                     if (newTime < distances.getOrDefault(nextState, Double.MAX_VALUE)) {
                         distances.put(nextState, newTime);
-                        time.put(nextState, newTime);
                         previous.put(nextState, current);
                         pq.add(nextState);
                     }
@@ -95,7 +89,7 @@
                
                 current = previous.get(current);
             }   
-            totTime = time.get(endState);
+            totTime = distances.get(endState);
             
             return route;
         }
